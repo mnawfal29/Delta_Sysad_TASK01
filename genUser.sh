@@ -4,7 +4,7 @@
 password=
 echo $password | sudo -S printf "\nHi\n"
 cd ~
-[ -d "~/bank" ] && mkdir ~/bank
+[ -d "/home/bank" ] && mkdir /home/bank
 
 read -p "Enter filename or e-Enter by hand : " option
 if [ "$option" = e ]
@@ -15,16 +15,16 @@ read -p "Enter cateogory : " cat
 #To create branch and user
 sudo groupadd -f $branch
 sudo groupadd -f $cat
-sudo useradd -m -d ~/bank/$acc -g $branch -G $cat $acc
+sudo useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
 #To create Transaction_History.txt and Current_Balance.txt
-cd ~/bank/$acc
+cd /home/bank/$acc
 sudo touch Transaction_History.txt
 echo 500 | sudo tee Current_Balance.txt > /dev/null
 cd ~
 #To create branch manager
 manager="MGR_""$branch"
 if [ -z $(getent passwd $manager) ]
-then sudo useradd -m -d ~/bank/$manager -g $branch $manager
+then sudo useradd -m -d /home/bank/$manager -g $branch $manager
 fi
 
 else
@@ -33,16 +33,16 @@ do
 #To create branch and user
 sudo groupadd -f $branch
 sudo groupadd -f $cat
-sudo useradd -m -d ~/bank/$acc -g $branch -G $cat $acc
+sudo useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
 #To create Transaction_History.txt and Current_Balance.txt
-cd ~/bank/$acc
+cd /home/bank/$acc
 sudo touch Transaction_History.txt
 echo 500 | sudo tee Current_Balance.txt > /dev/null
 cd ~
 #To create branch manager
 manager="MGR_""$branch"
 if [ -z $(getent passwd $manager) ]
-then sudo useradd -m -d ~/bank/$manager -g $branch $manager
+then sudo useradd -m -d /home/bank/$manager -g $branch $manager
 fi
 done < $option
 
