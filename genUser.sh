@@ -6,7 +6,6 @@ echo $password | sudo -S printf "\nHi\n"
 cd ~
 [ -d "~/bank" ] && mkdir ~/bank
 
-
 read -p "Enter filename or e-Enter by hand : " option
 if [ "$option" = e ]
 then
