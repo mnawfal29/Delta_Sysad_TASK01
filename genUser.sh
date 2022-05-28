@@ -1,15 +1,17 @@
 #!/bin/bash
 
 mkdir /home/bank
-read -p "Enter filename or e-Enter by hand : " option
+read -p "Enter filename / e - Enter by hand / x - Exit: " option
+while [ "$option" != x ]
+do
 
 if [ "$option" = e ]
 then
 read -p "Enter Account No : " acc
 read -p "Enter Branch No : " branch
-read -p "Enter cateogory : " cat
-read -p "Enter sub-cateogory 1 (if any) : " sub1
-read -p "Enter sub-cateogory 2 (if any) : " sub2
+read -p "Enter category : " cat
+read -p "Enter sub-category 1 (if any) : " sub1
+read -p "Enter sub-category 2 (if any) : " sub2
 
 #To create branch and user
 groupadd -f $branch
@@ -53,6 +55,8 @@ manager="MGR_""$branch"
 if [ -z $(getent passwd $manager) ]
 then useradd -m -d /home/bank/$manager -g $branch $manager
 fi
-done < /home/$option
-
+done < $option
 fi
+
+read -p "Enter filename / e - Enter by hand / x - Exit: " option
+done
