@@ -1,48 +1,55 @@
 #!/bin/bash
 
-#Enter password below
-password=
-echo $password | sudo -S printf "\nHi\n"
-cd ~
-[ ! -d "/home/bank" ] && mkdir /home/bank
-
+mkdir /home/bank
 read -p "Enter filename or e-Enter by hand : " option
+
 if [ "$option" = e ]
 then
 read -p "Enter Account No : " acc
 read -p "Enter Branch No : " branch
 read -p "Enter cateogory : " cat
+
 #To create branch and user
-sudo groupadd -f $branch
-sudo groupadd -f $cat
-sudo useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
+groupadd -f $branch
+groupadd -f $cat
+useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
+[ ! -z "$sub1" ] && groupadd -f $sub1 && usermod -a -G $sub1 $acc
+[ ! -z "$sub2" ] && groupadd -f $sub2 && usermod -a -G $sub2 $acc
+
 #To create Transaction_History.txt and Current_Balance.txt
+
 cd /home/bank/$acc
-sudo touch Transaction_History.txt
-echo 500 | sudo tee Current_Balance.txt > /dev/null
+touch Transaction_History.txt
+echo 500 > Current_Balance.txt 
 cd ~
+
 #To create branch manager
 manager="MGR_""$branch"
 if [ -z $(getent passwd $manager) ]
-then sudo useradd -m -d /home/bank/$manager -g $branch $manager
+then useradd -m -d /home/bank/$manager -g $branch $manager
 fi
 
 else
-while read -r acc branch cat sub ex
+while read -r acc branch cat sub1 sub2
 do
+
 #To create branch and user
-sudo groupadd -f $branch
-sudo groupadd -f $cat
-sudo useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
+groupadd -f $branch
+groupadd -f $cat
+useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
+[ "$sub1" != "-" ] && groupadd -f $sub1 && usermod -a -G $sub1 $acc
+[ "$sub2" != "-" ] && groupadd -f $sub2 && usermod -a -G $sub2 $acc
+
 #To create Transaction_History.txt and Current_Balance.txt
 cd /home/bank/$acc
-sudo touch Transaction_History.txt
-echo 500 | sudo tee Current_Balance.txt > /dev/null
+touch Transaction_History.txt
+echo 500 > Current_Balance.txt 
 cd ~
+
 #To create branch manager
 manager="MGR_""$branch"
 if [ -z $(getent passwd $manager) ]
-then sudo useradd -m -d /home/bank/$manager -g $branch $manager
+then useradd -m -d /home/bank/$manager -g $branch $manager
 fi
 done < $option
 
