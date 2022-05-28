@@ -4,7 +4,7 @@
 password=
 echo $password | sudo -S printf "\nHi\n"
 cd ~
-[ -d "/home/bank" ] && mkdir /home/bank
+[ ! -d "/home/bank" ] && mkdir /home/bank
 
 read -p "Enter filename or e-Enter by hand : " option
 if [ "$option" = e ]
