@@ -8,6 +8,8 @@ then
 read -p "Enter Account No : " acc
 read -p "Enter Branch No : " branch
 read -p "Enter cateogory : " cat
+read -p "Enter sub-cateogory 1 (if any) : " sub1
+read -p "Enter sub-cateogory 2 (if any) : " sub2
 
 #To create branch and user
 groupadd -f $branch
@@ -21,7 +23,7 @@ useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
 cd /home/bank/$acc
 touch Transaction_History.txt
 echo 500 > Current_Balance.txt 
-cd ~
+cd ..
 
 #To create branch manager
 manager="MGR_""$branch"
@@ -44,13 +46,13 @@ useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
 cd /home/bank/$acc
 touch Transaction_History.txt
 echo 500 > Current_Balance.txt 
-cd ~
+cd ..
 
 #To create branch manager
 manager="MGR_""$branch"
 if [ -z $(getent passwd $manager) ]
 then useradd -m -d /home/bank/$manager -g $branch $manager
 fi
-done < $option
+done < /home/$option
 
 fi
