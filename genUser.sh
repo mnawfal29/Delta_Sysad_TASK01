@@ -16,13 +16,13 @@ read -p "Enter sub-category 2 (if any) : " sub2
 #To create branch and user
 groupadd -f $branch
 groupadd -f $cat
-useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
+useradd -m -d /home/bank/$branch/$acc -G $cat,$branch $acc
 [ ! -z "$sub1" ] && groupadd -f $sub1 && usermod -a -G $sub1 $acc
 [ ! -z "$sub2" ] && groupadd -f $sub2 && usermod -a -G $sub2 $acc
 
 #To create Transaction_History.txt and Current_Balance.txt
 
-cd /home/bank/$acc
+cd /home/bank/$branch/$acc
 touch Transaction_History.txt
 echo 500 > Current_Balance.txt 
 cd ..
@@ -30,7 +30,7 @@ cd ..
 #To create branch manager
 manager="MGR_""$branch"
 if [ -z $(getent passwd $manager) ]
-then useradd -m -d /home/bank/$manager -g $branch $manager
+then useradd -m -d /home/bank/MGR/$manager -G $branch $manager
 fi
 
 else
@@ -40,12 +40,12 @@ do
 #To create branch and user
 groupadd -f $branch
 groupadd -f $cat
-useradd -m -d /home/bank/$acc -g $branch -G $cat $acc
+useradd -m -d /home/bank/$branch/$acc -G $cat,$branch $acc
 [ "$sub1" != "-" ] && groupadd -f $sub1 && usermod -a -G $sub1 $acc
 [ "$sub2" != "-" ] && groupadd -f $sub2 && usermod -a -G $sub2 $acc
 
 #To create Transaction_History.txt and Current_Balance.txt
-cd /home/bank/$acc
+cd /home/bank/$branch/$acc
 touch Transaction_History.txt
 echo 500 > Current_Balance.txt 
 cd ..
@@ -53,7 +53,7 @@ cd ..
 #To create branch manager
 manager="MGR_""$branch"
 if [ -z $(getent passwd $manager) ]
-then useradd -m -d /home/bank/$manager -g $branch $manager
+then useradd -m -d /home/bank/MGR/$manager -G $branch $manager
 fi
 done < $option
 fi
