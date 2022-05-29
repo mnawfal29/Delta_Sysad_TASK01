@@ -3,6 +3,7 @@
 IFS="_"
 read -a arr <<< $(whoami)
 branch="${arr[1]}"
+IFS=" "
 
 cd /home/bank/$branch
 branch_curr_bal=0
