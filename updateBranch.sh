@@ -1,19 +1,16 @@
 #!/bin/bash
 
-cd /home/bank
-for branch in $(ls)
-do
+IFS="_"
+read -a arr <<< $(whoami)
+branch="${arr[1]}"
 
-if [ "$branch" != MGR ]
-then
-cd $branch
+cd /home/bank/$branch
 branch_curr_bal=0
 touch Branch_Current_Balance.txt
 touch Branch_Transaction_History.txt
 
 for acc in $(ls)
 do
-
 if [ -d $acc ]
 then
 read curr_bal < ./$acc/Current_Balance.txt
@@ -23,6 +20,3 @@ fi
 done
 
 echo "$branch_curr_bal" > Branch_Current_Balance.txt
-cd ..
-fi
-done
