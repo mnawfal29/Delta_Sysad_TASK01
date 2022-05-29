@@ -1,6 +1,6 @@
 #!/bin/bash
-cd /home/bank
 
+cd /home/bank
 for branch in $(ls)
 do
 
