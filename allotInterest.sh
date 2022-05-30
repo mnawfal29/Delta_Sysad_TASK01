@@ -13,13 +13,13 @@ then
 cd $branch
 while read -r category rate
 do
-eval $category=${rate::-1} #Create varaible with identifier as cateogory and value as interest
+eval $category=${rate::-1} #Create varaible with identifier as category and value as interest
 done < Daily_Interest_Rates.txt #Assuming the file is already created by the Manager
 
 for acc in $(ls)
 do
 
-if [ -d $acc ] #Required to distinguish directories from .txt files in Branch file
+if [ -d $acc ] #Required to distinguish directories from .txt files in Branch? directory
 then
 read -a arr <<< "$(groups $acc)"
 arr=("${arr[@]:3}")
