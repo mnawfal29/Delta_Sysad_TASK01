@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $(crontab -l | wc -c) -eq 0 ]
+if [ $(crontab -l | wc -c) -eq 0 ] #Check if there is any crontab entry
 then
 (crontab -l 2>/dev/null; echo "00 00 * * * /root/allotInterest.sh ") | crontab -
 
